@@ -1,0 +1,10 @@
+###> doctrine/doctrine-bundle ###
+services:
+    database:
+        image: mariadb:10.11.7
+        environment:
+            MARIADB_ROOT_PASSWORD: root
+            MARIADB_DATABASE: application
+        ports:
+            - 3306
+###< doctrine/doctrine-bundle ###
