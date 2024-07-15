@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Bus\CommandBus;
 use App\Domain\Foo\Foo;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class IndexController extends AbstractController
 {
 
-    public function __construct(private MessageBusInterface $messageBus)
+    public function __construct(private CommandBus $commandBus)
     {
     }
 
@@ -19,7 +20,7 @@ class IndexController extends AbstractController
     public function index(): Response
     {
         dump('pre');
-        $this->messageBus->dispatch(new Foo());
+        $this->commandBus->dispatch(new Foo());
         dump('post');
 
         return new Response('<html><body></body></html>');

@@ -3,9 +3,17 @@ framework:
         # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
         # failure_transport: failed
 
+        default_bus: command_bus
+
         buses:
-            messenger.bus.default:
+            command_bus:
                 middleware:
+                    - doctrine_ping_connection
+                    - dispatch_after_current_bus
+                    - doctrine_transaction
+            event_bus:
+                middleware:
+                    - doctrine_ping_connection
                     - dispatch_after_current_bus
                     - doctrine_transaction
         transports:

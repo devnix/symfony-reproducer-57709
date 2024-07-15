@@ -4,18 +4,20 @@ declare(strict_types=1);
 
 namespace App\Domain\Foo;
 
+use App\Bus\CommandBus;
+use App\Bus\CommandHandlerInterface;
+use App\Bus\EventBus;
 use App\Domain\Bar\Bar;
 use App\Domain\MyException;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-#[AsMessageHandler]
-final class FooHandler
+final class FooHandler implements CommandHandlerInterface
 {
     public function __construct(
         private Connection $connection,
-        private MessageBusInterface $messageBus,
+        private EventBus   $eventBus,
     )
     {
     }
@@ -25,7 +27,7 @@ final class FooHandler
         $this->connection->executeQuery('SELECT @@VERSION');
 
         try {
-            $this->messageBus->dispatch(new Bar());
+            $this->eventBus->dispatch(new Bar());
         } catch (MyException $e) {
         }
     }

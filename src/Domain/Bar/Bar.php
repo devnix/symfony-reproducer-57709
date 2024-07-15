@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Bar;
 
-final class Bar
+use App\Bus\EventInterface;
+
+final class Bar implements EventInterface
 {
     public function __construct()
     {
