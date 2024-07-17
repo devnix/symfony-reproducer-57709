@@ -23,8 +23,6 @@ final class CommandBus
     {
         try {
             $this->commandBus->dispatch($command);
-        } catch (\Throwable $error) {
-            dd($error);
         } catch (HandlerFailedException $error) {
             throw $error->getPrevious() ?? $error;
         }
